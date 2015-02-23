@@ -4,3 +4,6 @@
 
 # Workspace files #
 **/.idea/
+
+# Generated files #
+Game.js*
