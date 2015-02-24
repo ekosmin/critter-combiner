@@ -6,4 +6,5 @@
 **/.idea/
 
 # Generated files #
-Game.js*
+Game.js
+Game.js.map

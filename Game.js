@@ -5,7 +5,7 @@ var __extends = this.__extends || function (d, b) {
     d.prototype = new __();
 };
 ///<reference path="build/typescript/phaser.d.ts"/>
-var Castlevania;
+var Castlevania;ff
 (function (Castlevania) {
     var Boot = (function (_super) {
         __extends(Boot, _super);
