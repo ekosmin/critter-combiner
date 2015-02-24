@@ -42,10 +42,6 @@ module Castlevania {
                 this.outputs[i].y = this.y + offset;
                 offset += this.height/3;
             }
-
-            chrome.storage.sync.get('foo', function(result){
-                document.getElementById("myText").value =result['foo'];
-            }.bind(this));
         }
 
         public inputsSlotted(): boolean {

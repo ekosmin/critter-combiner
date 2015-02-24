@@ -5,7 +5,7 @@ var __extends = this.__extends || function (d, b) {
     d.prototype = new __();
 };
 ///<reference path="build/typescript/phaser.d.ts"/>
-var Castlevania;ff
+var Castlevania;
 (function (Castlevania) {
     var Boot = (function (_super) {
         __extends(Boot, _super);
@@ -194,12 +194,6 @@ var Castlevania;
             if (this.machine.inputsSlotted()) {
                 this.produceCritter();
             }
-            chrome.storage.sync.get('foo', function (result) {
-                chrome.storage.sync.set({ 'foo': result['foo'] + 1 }, function () {
-                    // Notify that we saved.
-                    console.log("saved again");
-                });
-            }.bind(this));
         };
         OutputSlot.prototype.produceCritter = function () {
             if (!this.critterExists(this.getColor())) {
@@ -258,9 +252,6 @@ var Castlevania;
                 this.outputs[i].y = this.y + offset;
                 offset += this.height / 3;
             }
-            chrome.storage.sync.get('foo', function (result) {
-                document.getElementById("myText").value = result['foo'];
-            }.bind(this));
         };
         Machine.prototype.inputsSlotted = function () {
             for (var i = 0; i < this.inputs.length; i++) {

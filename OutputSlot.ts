@@ -13,13 +13,6 @@ module Castlevania {
             if (this.machine.inputsSlotted()) {
                 this.produceCritter();
             }
-
-            chrome.storage.sync.get('foo', function(result){
-                chrome.storage.sync.set({'foo':result['foo'] + 1}, function() {
-                    // Notify that we saved.
-                    console.log("saved again");
-                });
-            }.bind(this));
         }
 
         private produceCritter(): void {
