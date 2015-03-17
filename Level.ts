@@ -2,6 +2,7 @@
 ///<reference path="Critter.ts"/>
 ///<reference path="Machine.ts"/>
 ///<reference path="ColorSlot.ts"/>
+///<reference path="PowerText.ts"/>
 module Castlevania {
 
     export class Level extends Phaser.State {
@@ -9,6 +10,7 @@ module Castlevania {
         background: Phaser.Sprite;
         critters: Phaser.Group;
         machines: Phaser.Group;
+        powerText: PowerText;
 
         create() {
             var levelGroup = this.game.add.group();
@@ -24,12 +26,14 @@ module Castlevania {
 
             this.machines.add(new Machine(this, 500, 0, [Color.ORANGE], [Color.GREEN]));
             this.machines.add(new Machine(this, 500, 285, [Color.GREEN, Color.BLUE], [Color.GOLD]));
-            this.machines.add(new Machine(this, 0, 0, [Color.PINK], [Color.BLUE]));
+            this.machines.add(new Machine(this, 0, 0, [Color.PINK], [Color.BLUE, Color.GRAY]));
 
             levelGroup.add(this.background);
             levelGroup.add(this.machines);
             levelGroup.add(this.critters);
 
+            this.powerText = new PowerText(this, 3);
+            levelGroup.add(this.powerText);
         }
 
     }

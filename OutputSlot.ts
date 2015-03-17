@@ -17,13 +17,16 @@ module Castlevania {
 
         private produceCritter(): void {
             if (!this.critterExists(this.getColor())) {
-                this.level.critters.add(new Critter(this.level.game, this.x, this.y, this.getColor()));
-                if (this.getColor() == Color.GOLD) {
-                    var emitter: Phaser.Particles.Arcade.Emitter = this.game.add.emitter(this.game.world.centerX, this.game.world.centerY, 200);
-                    emitter.makeParticles('star');
-                    emitter.setScale(.5, .51, .5, .51, 1000);
-                    emitter.setAlpha(1, .5, 5000);
-                    emitter.start(false, 5000, 20);
+                if (this.level.powerText.power > 0) {
+                    this.level.powerText.decrementPower();
+                    this.level.critters.add(new Critter(this.level.game, this.x, this.y, this.getColor()));
+                    if (this.getColor() == Color.GOLD) {
+                        var emitter:Phaser.Particles.Arcade.Emitter = this.game.add.emitter(this.game.world.centerX, this.game.world.centerY, 200);
+                        emitter.makeParticles('star');
+                        emitter.setScale(.5, .51, .5, .51, 1000);
+                        emitter.setAlpha(1, .5, 5000);
+                        emitter.start(false, 5000, 20);
+                    }
                 }
             }
         }

@@ -197,13 +197,16 @@ var Castlevania;
         };
         OutputSlot.prototype.produceCritter = function () {
             if (!this.critterExists(this.getColor())) {
-                this.level.critters.add(new Castlevania.Critter(this.level.game, this.x, this.y, this.getColor()));
-                if (this.getColor() == 5 /* GOLD */) {
-                    var emitter = this.game.add.emitter(this.game.world.centerX, this.game.world.centerY, 200);
-                    emitter.makeParticles('star');
-                    emitter.setScale(.5, .51, .5, .51, 1000);
-                    emitter.setAlpha(1, .5, 5000);
-                    emitter.start(false, 5000, 20);
+                if (this.level.powerText.power > 0) {
+                    this.level.powerText.decrementPower();
+                    this.level.critters.add(new Castlevania.Critter(this.level.game, this.x, this.y, this.getColor()));
+                    if (this.getColor() == 5 /* GOLD */) {
+                        var emitter = this.game.add.emitter(this.game.world.centerX, this.game.world.centerY, 200);
+                        emitter.makeParticles('star');
+                        emitter.setScale(.5, .51, .5, .51, 1000);
+                        emitter.setAlpha(1, .5, 5000);
+                        emitter.start(false, 5000, 20);
+                    }
                 }
             }
         };
@@ -274,9 +277,32 @@ var Castlevania;
     Castlevania.Machine = Machine;
 })(Castlevania || (Castlevania = {}));
 ///<reference path="build/typescript/phaser.d.ts"/>
+///<reference path="Level.ts"/>
+var Castlevania;
+(function (Castlevania) {
+    var PowerText = (function (_super) {
+        __extends(PowerText, _super);
+        function PowerText(level, startingPower) {
+            _super.call(this, level.game, 0, 0, "", { font: "65px Arial", fill: "#000000", align: "center" });
+            this.power = startingPower;
+            this.refreshText();
+        }
+        PowerText.prototype.decrementPower = function () {
+            this.power -= 1;
+            this.refreshText();
+        };
+        PowerText.prototype.refreshText = function () {
+            this.text = "Power: " + this.power;
+        };
+        return PowerText;
+    })(Phaser.Text);
+    Castlevania.PowerText = PowerText;
+})(Castlevania || (Castlevania = {}));
+///<reference path="build/typescript/phaser.d.ts"/>
 ///<reference path="Critter.ts"/>
 ///<reference path="Machine.ts"/>
 ///<reference path="ColorSlot.ts"/>
+///<reference path="PowerText.ts"/>
 var Castlevania;
 (function (Castlevania) {
     var Level = (function (_super) {
@@ -295,10 +321,12 @@ var Castlevania;
             this.critters.add(new Castlevania.Critter(this.game, 130, 500, 0 /* PINK */));
             this.machines.add(new Castlevania.Machine(this, 500, 0, [1 /* ORANGE */], [3 /* GREEN */]));
             this.machines.add(new Castlevania.Machine(this, 500, 285, [3 /* GREEN */, 2 /* BLUE */], [5 /* GOLD */]));
-            this.machines.add(new Castlevania.Machine(this, 0, 0, [0 /* PINK */], [2 /* BLUE */]));
+            this.machines.add(new Castlevania.Machine(this, 0, 0, [0 /* PINK */], [2 /* BLUE */, 4 /* GRAY */]));
             levelGroup.add(this.background);
             levelGroup.add(this.machines);
             levelGroup.add(this.critters);
+            this.powerText = new Castlevania.PowerText(this, 3);
+            levelGroup.add(this.powerText);
         };
         return Level;
     })(Phaser.State);
